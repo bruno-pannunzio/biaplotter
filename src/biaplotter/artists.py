@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from matplotlib.colors import Colormap
+from matplotlib.colors import Colormap, LinearSegmentedColormap
 from matplotlib.collections import QuadMesh
 from abc import ABC, abstractmethod
 from nap_plot_tools.cmap import cat10_mod_cmap, cat10_mod_cmap_first_transparent
@@ -320,7 +320,8 @@ class Histogram2D(Artist):
             self._histogram[-1].remove()
         # Draw the new histogram
         self._histogram = self.ax.hist2d(
-            value[:, 0], value[:, 1], bins=self._bins, cmap=self._histogram_colormap, zorder=1)
+            value[:, 0], value[:, 1], bins=self._bins, cmap=LinearSegmentedColormap.from_list(
+                self._histogram_colormap.name, self._histogram_colormap.colors), zorder=1)
         if self._color_indices is None:
             self.color_indices = 0  # Set default color index
         else:
